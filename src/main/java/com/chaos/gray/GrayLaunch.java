@@ -25,22 +25,22 @@ public class GrayLaunch {
 
     public GrayLaunch(int ruleUpdateTimeInterval) {
 
-        //开启自动更新灰度规则
+        //从配置文件加载灰度规则
         loadRule();
-        this.executor = Executors.newSingleThreadScheduledExecutor();
+        /*this.executor = Executors.newSingleThreadScheduledExecutor();
         this.executor.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
                 loadRule();
             }
-        }, ruleUpdateTimeInterval, ruleUpdateTimeInterval, TimeUnit.SECONDS);
+        }, ruleUpdateTimeInterval, ruleUpdateTimeInterval, TimeUnit.SECONDS);*/
     }
 
     public GrayLaunch() {
         this(DEFAULT_RULE_UPDATE_TIME_INTERVAL);
     }
 
-    //定时读配置文件更新内存灰度规则
+    //读配置文件更新内存灰度规则
     private void loadRule() {
         //yaml->dto
         InputStream in = null;
@@ -70,7 +70,7 @@ public class GrayLaunch {
         Map<String, IGrayFeature> darkFeatures = new HashMap<>();
         List<GrayRuleConfig.GrayFeatureConfig> darkFeatureConfigs = ruleConfig.getFeatures();
         for (GrayRuleConfig.GrayFeatureConfig darkFeatureConfig : darkFeatureConfigs) {
-            darkFeatures.put(darkFeatureConfig.getKey(), new GrayFeature(darkFeatureConfig));
+            darkFeatures.put(darkFeatureConfig.getKey(), new GrayFeatureByConfig(darkFeatureConfig));
         }
         this.rule.setGreyFeatures(darkFeatures);
     }

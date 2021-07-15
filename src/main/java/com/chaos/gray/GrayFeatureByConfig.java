@@ -10,7 +10,7 @@ import com.google.common.collect.TreeRangeSet;
  * @since 2021/7/13
  */
 
-public class GrayFeature implements IGrayFeature{
+public class GrayFeatureByConfig implements IGrayFeature{
     private String key;
     private boolean enabled;
     private int percentage;
@@ -18,7 +18,7 @@ public class GrayFeature implements IGrayFeature{
     //利用RangeSet来实现数字类型的灰度
     private RangeSet<Long> rangeSet = TreeRangeSet.create();
 
-    public GrayFeature(GrayRuleConfig.GrayFeatureConfig grayFeatureConfig) {
+    public GrayFeatureByConfig(GrayRuleConfig.GrayFeatureConfig grayFeatureConfig) {
         this.key = grayFeatureConfig.getKey();
         this.enabled = grayFeatureConfig.isEnabled();
         String darkRule = grayFeatureConfig.getRule().trim();
