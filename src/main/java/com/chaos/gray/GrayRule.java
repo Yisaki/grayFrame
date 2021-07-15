@@ -11,23 +11,38 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GrayRule {
     // 从配置文件中加载的灰度规则
-    private Map<String, IGrayFeature> darkFeatures = new HashMap<>();
+    private Map<String, IGrayFeature> greyFeatures = new HashMap<>();
     // 编程实现的灰度规则
-    private ConcurrentHashMap<String, IGrayFeature> programmedDarkFeatures = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, IGrayFeature> fixedGreyFeatures = new ConcurrentHashMap<>();
 
-    public void addProgrammedDarkFeature(String featureKey, IGrayFeature darkFeature) {
-        programmedDarkFeatures.put(featureKey, darkFeature);
+    /**
+     * 写代码新增灰度规则
+     * @param featureKey
+     * @param darkFeature
+     */
+    public void addFixedGreyFeature(String featureKey, IGrayFeature darkFeature) {
+        fixedGreyFeatures.put(featureKey, darkFeature);
     }
 
-    public void setDarkFeatures(Map<String, IGrayFeature> newDarkFeatures) {
-        this.darkFeatures = newDarkFeatures;
+    /**
+     * 设置灰度规则列表
+     * @param newDarkFeatures
+     */
+    public void setGreyFeatures(Map<String, IGrayFeature> newDarkFeatures) {
+        this.greyFeatures = newDarkFeatures;
     }
 
-    public IGrayFeature getDarkFeature(String featureKey) {
-        IGrayFeature darkFeature = programmedDarkFeatures.get(featureKey);
+    /**
+     * 根据规则key获取灰度处理实例
+     * @param featureKey
+     * @return
+     */
+    public IGrayFeature getGreyFeature(String featureKey) {
+        //fixed优先级较高
+        IGrayFeature darkFeature = fixedGreyFeatures.get(featureKey);
         if (darkFeature != null) {
             return darkFeature;
         }
-        return darkFeatures.get(featureKey);
+        return greyFeatures.get(featureKey);
     }
 }

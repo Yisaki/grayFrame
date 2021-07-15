@@ -9,9 +9,9 @@ public class MainTest {
         GrayLaunch grayLaunch=new GrayLaunch();
         //grayLaunch.addProgrammedDarkFeature("user_promotion", new UserPromotionDarkRule()); // 添加编程实现的灰度规则
         //IGrayFeature darkFeature = grayLaunch.getDarkFeature("user_promotion");
-        IGrayFeature darkFeature = grayLaunch.getDarkFeature("call_newapi_getUserById");
-        System.out.println(darkFeature.enabled());
-        System.out.println("gray result:"+darkFeature.gray(893));
-        System.out.println("gray result:"+darkFeature.gray(1));
+        IGrayFeature grayFeature = grayLaunch.getGreyFeature("call_newapi_getUserById");
+        System.out.println(grayFeature.enabled());
+        System.out.println("gray result:"+grayFeature.gray(893));
+        System.out.println("gray result:"+grayFeature.gray(1));
     }
 }

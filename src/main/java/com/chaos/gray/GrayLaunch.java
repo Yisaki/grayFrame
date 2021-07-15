@@ -1,7 +1,6 @@
 package com.chaos.gray;
 
 import com.chaos.gray.model.GrayRuleConfig;
-import lombok.extern.slf4j.Slf4j;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
@@ -25,6 +24,8 @@ public class GrayLaunch {
     private ScheduledExecutorService executor;
 
     public GrayLaunch(int ruleUpdateTimeInterval) {
+
+        //开启自动更新灰度规则
         loadRule();
         this.executor = Executors.newSingleThreadScheduledExecutor();
         this.executor.scheduleAtFixedRate(new Runnable() {
@@ -39,6 +40,7 @@ public class GrayLaunch {
         this(DEFAULT_RULE_UPDATE_TIME_INTERVAL);
     }
 
+    //定时读配置文件更新内存灰度规则
     private void loadRule() {
         //yaml->dto
         InputStream in = null;
@@ -70,16 +72,16 @@ public class GrayLaunch {
         for (GrayRuleConfig.GrayFeatureConfig darkFeatureConfig : darkFeatureConfigs) {
             darkFeatures.put(darkFeatureConfig.getKey(), new GrayFeature(darkFeatureConfig));
         }
-        this.rule.setDarkFeatures(darkFeatures);
+        this.rule.setGreyFeatures(darkFeatures);
     }
 
     // 新增：添加编程实现的灰度规则的接口
-    public void addProgrammedDarkFeature(String featureKey, IGrayFeature darkFeature) {
-        this.rule.addProgrammedDarkFeature(featureKey, darkFeature);
+    public void addFixedGreyFeature(String featureKey, IGrayFeature darkFeature) {
+        this.rule.addFixedGreyFeature(featureKey, darkFeature);
     }
 
-    public IGrayFeature getDarkFeature(String featureKey) {
-        IGrayFeature darkFeature = this.rule.getDarkFeature(featureKey);
+    public IGrayFeature getGreyFeature(String featureKey) {
+        IGrayFeature darkFeature = this.rule.getGreyFeature(featureKey);
         return darkFeature;
     }
 }
