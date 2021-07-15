@@ -1,10 +1,10 @@
 features:
   - key: call_newapi_getUserById
     enabled: true
-    rule: "{893,342,1020-1120}"
+    rule: 893,342,1020-1120
   - key: call_newapi_registerUser
     enabled: true
-    rule: "{1391198723}"
+    rule: 1391198723
   - key: newalgo_loan
     enabled: true
-    rule: "{0-1000}"
+    rule: 0-1000

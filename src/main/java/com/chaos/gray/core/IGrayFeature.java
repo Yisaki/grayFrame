@@ -1,4 +1,4 @@
-package com.chaos.gray;
+package com.chaos.gray.core;
 
 /**
  * @author huangxingqi

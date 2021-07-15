@@ -1,5 +1,7 @@
 package com.chaos.gray;
 
+import com.chaos.gray.core.IGrayFeature;
+
 /**
  * @author huangxingqi
  * @since 2021/7/13

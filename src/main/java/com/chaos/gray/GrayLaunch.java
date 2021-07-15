@@ -1,5 +1,8 @@
 package com.chaos.gray;
 
+import com.chaos.gray.core.GrayFeatureByConfig;
+import com.chaos.gray.core.GrayRule;
+import com.chaos.gray.core.IGrayFeature;
 import com.chaos.gray.model.GrayRuleConfig;
 import org.yaml.snakeyaml.Yaml;
 
@@ -8,9 +11,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author huangxingqi

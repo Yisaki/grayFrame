@@ -1,4 +1,4 @@
-package com.chaos.gray;
+package com.chaos.gray.core;
 
 import com.chaos.gray.model.GrayRuleConfig;
 import com.google.common.collect.Range;
@@ -30,11 +30,12 @@ public class GrayFeatureByConfig implements IGrayFeature{
      * @param darkRule
      */
     protected void parseGrayRule(String darkRule) {
-        if (!darkRule.startsWith("{") || !darkRule.endsWith("}")) {
+        /*if (!darkRule.startsWith("{") || !darkRule.endsWith("}")) {
             throw new RuntimeException("Failed to parse dark rule: " + darkRule);
-        }
+        }*/
 
-        String[] rules = darkRule.substring(1, darkRule.length() - 1).split(",");
+        //String[] rules = darkRule.substring(1, darkRule.length() - 1).split(",");
+        String[] rules = darkRule.split(",");
         this.rangeSet.clear();
         //this.percentage = 0;
         for (String rule : rules) {
