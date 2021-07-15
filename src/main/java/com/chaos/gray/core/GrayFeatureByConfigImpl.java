@@ -5,37 +5,67 @@ import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
 
+import javax.xml.stream.FactoryConfigurationError;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author huangxingqi
  * @since 2021/7/13
  */
 
-public class GrayFeatureByConfig implements IGrayFeature{
+public class GrayFeatureByConfigImpl implements IGrayFeature{
     private String key;
     private boolean enabled;
     private int percentage;
 
     //利用RangeSet来实现数字类型的灰度
-    private RangeSet<Long> rangeSet = TreeRangeSet.create();
+    private RangeSet<Long> rangeSet ;
 
-    public GrayFeatureByConfig(GrayRuleConfig.GrayFeatureConfig grayFeatureConfig) {
+    private Set<String> greyStringSet;
+
+    public GrayFeatureByConfigImpl(GrayRuleConfig.GrayFeatureConfig grayFeatureConfig) {
         this.key = grayFeatureConfig.getKey();
         this.enabled = grayFeatureConfig.isEnabled();
         String darkRule = grayFeatureConfig.getRule().trim();
-        parseGrayRule(darkRule);
+
+        switch (grayFeatureConfig.getDataType()){
+            case "Long":
+                rangeSet = TreeRangeSet.create();
+                parseGrayRule(darkRule);
+                break;
+            case "String":
+                greyStringSet=new HashSet<>();
+                parseStringGrayRule(darkRule);
+                break;
+        }
+
+    }
+
+    protected void parseStringGrayRule(String greyRule){
+        String[] rules=greyRule.split(",");
+        if(rules==null||rules.length<1){
+            return;
+        }
+
+        greyStringSet.clear();
+        for(String rule:rules){
+            greyStringSet.add(rule);
+        }
+
     }
 
     /**
      * 解析灰度规则字符串
-     * @param darkRule
+     * @param greyRule
      */
-    protected void parseGrayRule(String darkRule) {
+    protected void parseGrayRule(String greyRule) {
         /*if (!darkRule.startsWith("{") || !darkRule.endsWith("}")) {
             throw new RuntimeException("Failed to parse dark rule: " + darkRule);
         }*/
 
         //String[] rules = darkRule.substring(1, darkRule.length() - 1).split(",");
-        String[] rules = darkRule.split(",");
+        String[] rules = greyRule.split(",");
         this.rangeSet.clear();
         //this.percentage = 0;
         for (String rule : rules) {
@@ -54,12 +84,12 @@ public class GrayFeatureByConfig implements IGrayFeature{
                 //范围灰度
                 String[] parts = rule.split("-");
                 if (parts.length != 2) {
-                    throw new RuntimeException("Failed to parse dark rule: " + darkRule);
+                    throw new RuntimeException("Failed to parse dark rule: " + greyRule);
                 }
                 long start = Long.parseLong(parts[0]);
                 long end = Long.parseLong(parts[1]);
                 if (start > end) {
-                    throw new RuntimeException("Failed to parse dark rule: " + darkRule);
+                    throw new RuntimeException("Failed to parse dark rule: " + greyRule);
                 }
                 this.rangeSet.add(Range.closed(start, end));
             } else {
@@ -107,7 +137,6 @@ public class GrayFeatureByConfig implements IGrayFeature{
      */
     @Override
     public boolean gray(String darkTarget) {
-        //todo
-        return false;
+        return greyStringSet.contains(darkTarget);
     }
 }

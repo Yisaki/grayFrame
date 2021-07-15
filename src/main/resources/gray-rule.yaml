@@ -1,10 +1,18 @@
 features:
-  - key: call_newapi_getUserById
+  - key: grey_user_id
     enabled: true
-    rule: 893,342,1020-1120
-  - key: call_newapi_registerUser
+    dataType: Long
+    rule: 1,2,10-15 #userid 为1或者2 或者10-15之间
+  - key: deprecated_grey_rule
+    dataType: Long
+    enabled: false
+    rule: 100
+#结合业务
+  - key: device_transfered_2.0
     enabled: true
-    rule: 1391198723
-  - key: newalgo_loan
+    dataType: String
+    rule: deviceId-test-1,deviceId-test-2,deviceId-test-3
+  - key: product_transfered_2.0
     enabled: true
-    rule: 0-1000
+    dataType: String
+    rule: test-key1,test-key2

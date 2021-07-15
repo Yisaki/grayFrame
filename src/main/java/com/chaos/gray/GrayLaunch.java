@@ -1,6 +1,6 @@
 package com.chaos.gray;
 
-import com.chaos.gray.core.GrayFeatureByConfig;
+import com.chaos.gray.core.GrayFeatureByConfigImpl;
 import com.chaos.gray.core.GrayRule;
 import com.chaos.gray.core.IGrayFeature;
 import com.chaos.gray.model.GrayRuleConfig;
@@ -71,7 +71,7 @@ public class GrayLaunch {
         Map<String, IGrayFeature> darkFeatures = new HashMap<>();
         List<GrayRuleConfig.GrayFeatureConfig> darkFeatureConfigs = ruleConfig.getFeatures();
         for (GrayRuleConfig.GrayFeatureConfig darkFeatureConfig : darkFeatureConfigs) {
-            darkFeatures.put(darkFeatureConfig.getKey(), new GrayFeatureByConfig(darkFeatureConfig));
+            darkFeatures.put(darkFeatureConfig.getKey(), new GrayFeatureByConfigImpl(darkFeatureConfig));
         }
         this.rule.setGreyFeatures(darkFeatures);
     }

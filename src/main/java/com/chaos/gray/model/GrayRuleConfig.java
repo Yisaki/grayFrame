@@ -21,33 +21,12 @@ public class GrayRuleConfig {
     }
 
 
+    @Data
     public static class GrayFeatureConfig {
         private String key;
         private boolean enabled;
         private String rule;
+        private String dataType;
 
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        public boolean isEnabled() {
-            return enabled;
-        }
-
-        public void setEnabled(boolean enabled) {
-            this.enabled = enabled;
-        }
-
-        public String getRule() {
-            return rule;
-        }
-
-        public void setRule(String rule) {
-            this.rule = rule;
-        }
     }
 }
